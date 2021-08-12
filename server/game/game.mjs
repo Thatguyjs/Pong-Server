@@ -1,6 +1,7 @@
 // Create, update, and close games
 
 // import LobbyManager from "./lobby.mjs";
+import Ball from "./ball.mjs";
 
 import gen_string from "../util/string.mjs";
 import { settings } from "../settings.mjs";
@@ -184,6 +185,9 @@ class Game {
 				]));
 			}
 
+			this.ball.on('score', this.score.bind(this));
+			this.ball.reset();
+
 			this.start_updates();
 		}, 5000);
 
@@ -214,6 +218,16 @@ class Game {
 		GameManager.server.send(sk_info, buf);
 	}
 
+
+	// A player scored
+	score(side) {
+		if(side === 'left') {
+			// TODO
+		}
+		else {
+			// TODO
+		}
+	}
 }
 
 
