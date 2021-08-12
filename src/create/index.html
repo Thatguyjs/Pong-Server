@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Pong - Create a Game</title>
+		<base href="/create/">
+
+		<link rel="stylesheet" href="/common/common.css">
+		<link rel="stylesheet" href="style.css">
+
+		<script src="/common/icons.js" defer></script>
+	</head>
+	<body>
+		<div id="icon-container" class="hidden"></div>
+
+		<header>
+			<a href="/menu">
+				<svg><use href="#icon-arrow-left"></svg>
+			</a>
+
+			<h1>Pong</h1>
+		</header>
+
+		<main>
+			<h2>Create a Game</h2>
+
+			<div id="settings-container">
+				<div class="setting">
+					<span>Game Name</span>
+					<input id="setting-name" type="text" placeholder="Name">
+				</div>
+			</div>
+
+			<button id="continue">
+				Continue
+				<svg><use href="#icon-arrow-right"/></svg>
+			</button>
+		</main>
+
+		<script type="module" src="main.mjs"></script>
+	</body>
+</html>

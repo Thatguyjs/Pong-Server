@@ -1,0 +1,145 @@
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 72px;
+}
+
+header h1 {
+	margin: 0 0 0 32px;
+
+	color: #eee;
+	user-select: none;
+}
+
+
+main {
+	display: flex;
+	flex-direction: column;
+
+	margin-top: 72px;
+
+	width: 100%;
+	flex-grow: 1;
+}
+
+
+#player-container {
+	display: flex;
+	flex-direction: column;
+
+	margin-left: 20%;
+
+	width: 60%;
+	flex-grow: 1;
+
+	overflow-y: auto;
+}
+
+#player-container h2 {
+	margin: 24px 0 32px 48px;
+	color: #eee;
+}
+
+
+.player {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+	height: 54px;
+
+	border-bottom: 1px solid #222;
+}
+
+.player:first-child {
+	border-top: 1px solid #222;
+}
+
+.player-name {
+	margin-left: 48px;
+
+	color: #aaa;
+	font-size: 18px;
+}
+
+.player-ping {
+	margin-right: 32px;
+
+	color: #888;
+	font-size: 17px;
+}
+
+
+#control-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	margin-left: 20%;
+	margin-bottom: 32px;
+
+	width: 60%;
+	height: 80px;
+}
+
+
+#name-container {
+	display: flex;
+	flex-direction: column;
+
+	height: 100%;
+}
+
+#name-container span {
+	margin: 6px 0 6px 48px;
+	color: #bbb;
+}
+
+#name-container input {
+	margin-left: 48px;
+	padding-left: 8px;
+
+	width: 200px;
+	height: 32px;
+
+	color: #eee;
+	font-size: 16px;
+
+	background: none;
+	border: 1px solid #888;
+	outline: none;
+}
+
+
+#start-button {
+	margin-right: 48px;
+
+	width: 180px;
+	height: 48px;
+
+	color: #aaa;
+	font-size: 17px;
+
+	background: none;
+	border: 1px solid #888;
+
+	transition: color 120ms, border-color 120ms;
+}
+
+#start-button:hover {
+	color: #eee;
+	border-color: #bbb;
+}

@@ -1,0 +1,39 @@
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin: 0;
+	padding: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	background: black;
+}
+
+
+h1 {
+	margin: 0 0 16px 0;
+
+	color: #ccc;
+	font-family: system-ui;
+	font-size: 22px;
+}
+
+
+#input {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+input {
+	margin-right: 8px;
+	padding: 4px 6px;
+}
+
+#verify {
+	width: 60px;
+	height: 26px;
+}

@@ -1,0 +1,29 @@
+{
+	"ip": "127.0.0.1",
+
+	"http-port": 8080,
+	"ws-port": 8081,
+
+	"keys": {
+		"admin": {
+			"amount": 2,
+			"length": 16,
+			"expiration": 10,
+			"uses": 2
+		},
+
+		"guest": {
+			"amount": 8,
+			"length": 10,
+			"expiration": 30,
+			"uses": 10
+		}
+	},
+
+	"max-sessions": 50,
+	"max-games": 10,
+
+	"ip-bans": [
+		"12.34.567.890"
+	]
+}

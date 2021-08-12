@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Pong - Lobby</title>
+		<base href="/lobby/">
+
+		<link rel="stylesheet" href="/common/common.css">
+		<link rel="stylesheet" href="style.css">
+
+		<script src="/common/icons.js" defer></script>
+	</head>
+	<body>
+		<div id="icon-container" class="hidden"></div>
+
+		<header>
+			<h1>Pong</h1>
+		</header>
+
+		<main>
+			<div id="player-container">
+				<h2>Players</h2>
+				<div id="player-list"></div>
+			</div>
+
+			<div id="control-container">
+				<div id="name-container">
+					<span>Your username</span>
+					<input id="name-input" type="text" placeholder="Username">
+				</div>
+				<button id="start-button" class="hidden">Start Game</button>
+			</div>
+		</main>
+
+		<script type="module" src="main.mjs"></script>
+	</body>
+</html>

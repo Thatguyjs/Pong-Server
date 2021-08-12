@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Pong - Menu</title>
+		<base href="/menu/">
+
+		<link rel="stylesheet" href="/common/common.css">
+		<link rel="stylesheet" href="style.css">
+
+		<script src="/common/icons.js" defer></script>
+	</head>
+	<body>
+		<div id="icon-container" class="hidden"></div>
+
+		<header>
+			<h1>Pong</h1>
+		</header>
+
+		<div id="container">
+			<button id="game-create">
+				Create a Game
+				<svg><use href="#icon-arrow-right"/></svg>
+			</button>
+
+			<div>
+				<button id="game-join">
+					Join Game
+					<svg><use href="#icon-arrow-right"/></svg>
+				</button>
+				<div id="join-container" class="hidden">
+					<svg id="join-close"><use href="#icon-arrow-left"/></svg>
+					<input id="join-key" type="text" placeholder="Game Key"/>
+				</div>
+			</div>
+		</div>
+
+		<p id="error-message"></p>
+
+		<span id="color">#39BB9D</span>
+		<script type="module" src="main.mjs"></script>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+@font-face {
+	font-family: "8-bit";
+	src: url("/fonts/Chakra_Petch/ChakraPetch-Regular.ttf");
+}
+
+
+body {
+	margin: 0;
+	padding: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	background: black;
+}
+
+body * {
+	font-family: "8-bit";
+}
+
+
+button:hover {
+	cursor: pointer;
+}
+
+
+.hidden {
+	display: none !important;
+}
