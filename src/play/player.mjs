@@ -30,11 +30,11 @@ class Player {
 	#keys = { up: false, down: false };
 
 	x = 0;
-	y = 0;
+	y = 50;
 	vel = { x: 0, y: 0 };
 
-	width = 8;
-	height = 120;
+	width = 8; // px
+	height = 1.2; // % of height
 
 	constructor(position, input_mode) {
 		if(position < 0 || position > 1) throw new RangeError("Invalid position: " + position);
@@ -65,8 +65,8 @@ class Player {
 
 
 	reset() {
-		if(this.position === Player.LEFT) this.x = 50;
-		else this.x = window.innerWidth - 50;
+		if(this.position === Player.LEFT) this.x = 60;
+		else this.x = window.innerWidth - 60;
 
 		let interval = setInterval(() => {
 			this.y = lerp(this.y, window.innerHeight / 2, 0.1);
@@ -80,8 +80,8 @@ class Player {
 
 
 	update() {
-		if(this.position === Player.LEFT) this.x = 50;
-		else this.x = window.innerWidth - 50;
+		if(this.position === Player.LEFT) this.x = 60;
+		else this.x = window.innerWidth - 60;
 
 		let slow = true;
 
@@ -112,8 +112,10 @@ class Player {
 
 
 	render(ctx) {
+		const height = this.height * 100;
+
 		ctx.fillStyle = '#ffffff';
-		ctx.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+		ctx.fillRect(this.x - this.width / 2, this.y - height / 2, this.width, height);
 	}
 }
 

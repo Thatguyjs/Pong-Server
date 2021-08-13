@@ -21,10 +21,12 @@ const lobby_opcode = {
 const game_opcode = {
 	AUTH: 0,
 	START: 1,
-	PLAYER_UPDATE: 2,
-	BALL_UPDATE: 3,
-	GAME_UPDATE: 4,
-	PING: 5
+	POSITION: 2,
+	PLAYER_UPDATE: 3,
+	BALL_UPDATE: 4,
+	SCORE: 5,
+	WIN: 6,
+	PING: 7
 };
 
 
@@ -201,6 +203,14 @@ class Game {
 	start_updates() {
 		const keys = Object.keys(this.players);
 
+		GameManager.server.send(this.players[keys[0]].sk_info, Buffer.from([
+			game_opcode.POSITION, 0, 0, 0
+		]));
+
+		GameManager.server.send(this.players[keys[1]].sk_info, Buffer.from([
+			game_opcode.POSITION, 0, 1, 0
+		]));
+
 		setInterval(() => {
 			this.send_update(this.players[keys[0]].sk_info, this.players[keys[1]].pos);
 			this.send_update(this.players[keys[1]].sk_info, this.players[keys[0]].pos);
@@ -241,7 +251,7 @@ class Game {
 		if(winner !== -1) {
 			for(let p in this.players) {
 				GameManager.server.send(this.players[p].sk_info, Buffer.from([
-					game_opcode.GAME_UPDATE, 0,
+					game_opcode.WIN, 0,
 					winner, 0
 				]));
 			}
@@ -351,7 +361,7 @@ const GameManager = {
 					break; }
 
 				case game_opcode.PLAYER_UPDATE:
-					const pos = frame.data.readFloatBE(2);
+					let pos = frame.data.readFloatBE(2);
 					if(pos < 0) pos = 0;
 					if(pos > 100) pos = 100;
 

@@ -178,10 +178,12 @@ class GameSocket {
 	static opcode = {
 		AUTH: 0,
 		START: 1,
-		PLAYER_UPDATE: 2,
-		BALL_UPDATE: 3,
-		GAME_UPDATE: 4,
-		PING: 5
+		POSITION: 2,
+		PLAYER_UPDATE: 3,
+		BALL_UPDATE: 4,
+		SCORE: 5,
+		WIN: 6,
+		PING: 7
 	};
 
 	ip = "";
@@ -232,6 +234,10 @@ class GameSocket {
 				if(bytes[1]) this.#init_ping();
 				break;
 
+			case GameSocket.opcode.POSITION:
+				this.#emitter.emit('position', bytes[1]);
+				break;
+
 			case GameSocket.opcode.START:
 				this.#emitter.emit('start');
 				break;
@@ -242,6 +248,14 @@ class GameSocket {
 
 			case GameSocket.opcode.BALL_UPDATE:
 				this.#emitter.emit('ball_update', view.getFloat32(2), view.getFloat32(6));
+				break;
+
+			case GameSocket.opcode.SCORE:
+				this.#emitter.emit('score', view.getUint8(2), view.getUint8(3));
+				break;
+
+			case GameSocket.opcode.WIN:
+				this.#emitter.emit('win', view.getUint8(2));
 				break;
 
 			default:
@@ -276,7 +290,7 @@ class GameSocket {
 		const view = new DataView(buf);
 
 		// Normalize the Y position between 0 and 100
-		let y = (player.y - player.height / 2) / (window.innerHeight - player.height) * 100;
+		let y = (player.y - player.height * 50) / (window.innerHeight - player.height * 100) * 100;
 
 		view.setUint16(0, GameSocket.opcode.PLAYER_UPDATE, true);
 		view.setFloat32(2, y);

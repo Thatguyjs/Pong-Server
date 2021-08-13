@@ -51,6 +51,12 @@ const player_2 = new Player(Player.RIGHT, Player.NET);
 const ball = new Ball();
 
 
+Net.socket.on('position', (position) => {
+	player_1.position = position;
+	player_2.position = +!position;
+});
+
+
 // window.addEventListener('keypress', (evt) => {
 // 	if(evt.code === 'Space') {
 // 		paused = !paused;
