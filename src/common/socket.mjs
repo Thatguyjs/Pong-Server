@@ -241,7 +241,7 @@ class GameSocket {
 				break;
 
 			case GameSocket.opcode.BALL_UPDATE:
-				this.#emitter.emit('ball_update', view.getFloat32(2), view.getFloat32(4));
+				this.#emitter.emit('ball_update', view.getFloat32(2), view.getFloat32(6));
 				break;
 
 			default:

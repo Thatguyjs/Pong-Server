@@ -21,9 +21,9 @@ class Ball {
 	size = 10;
 
 	constructor() {
-		Net.socket.on('ball_update', (ball) => {
-			this.x = ball.x;
-			this.y = ball.y;
+		Net.socket.on('ball_update', (x, y) => {
+			this.x = x / 100 * window.innerWidth;
+			this.y = y / 100 * window.innerHeight;
 		});
 	}
 

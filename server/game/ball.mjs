@@ -3,6 +3,12 @@
 import EventEmitter from "events";
 
 
+// Generate a random number in a range
+function random(min, max) {
+	return Math.random() * (max - min) + min;
+}
+
+
 class Ball {
 	x = 0;
 	y = 0;
@@ -17,9 +23,10 @@ class Ball {
 		this.x = 50;
 		this.y = 50;
 
-		// TODO: Random velocity
-		this.vel.x = 0;
-		this.vel.y = 0;
+		this.vel.x = random(0.05, 0.08);
+		if(Math.random() > 0.5) this.vel.x = -this.vel.x;
+
+		this.vel.y = random(-0.01, 0.01);
 	}
 
 
@@ -49,7 +56,26 @@ class Ball {
 
 	// Check for collisions with players
 	collide(p1, p2) {
-		// TODO
+		if(this.x < 0.06 && this.y > p1 - 0.15 && this.y < p1 + 0.15) {
+			this.x = 0.05;
+			this.vel.x = -this.vel.x * 1.005;
+		}
+		else if(this.x > 99.94 && this.y > p2 - 0.15 && this.x < p2 + 0.15) {
+			this.x = 99.95;
+			this.vel.x = -this.vel.x * 1.005;
+		}
+	}
+
+
+	// Generate a buffer for a ball_update packet
+	get_buffer(opcode) {
+		const buf = Buffer.alloc(10);
+		buf.writeUint16LE(opcode);
+
+		buf.writeFloatBE(this.x, 2);
+		buf.writeFloatBE(this.y, 6);
+
+		return buf;
 	}
 
 

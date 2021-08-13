@@ -43,6 +43,8 @@ class Game {
 	player_count = 0;
 	max_players = 2;
 
+	scores = [0, 0];
+
 	ball = new Ball();
 
 
@@ -205,11 +207,14 @@ class Game {
 
 			this.ball.update();
 			this.ball.collide(this.players[keys[0]].pos, this.players[keys[1]].pos);
+
+			GameManager.server.send(this.players[keys[0]].sk_info, this.ball.get_buffer(game_opcode.BALL_UPDATE));
+			GameManager.server.send(this.players[keys[1]].sk_info, this.ball.get_buffer(game_opcode.BALL_UPDATE));
 		}, 0);
 	}
 
 
-	// Send a player update to a socket
+	// Send a player update to a player socket
 	send_update(sk_info, pos) {
 		const buf = Buffer.alloc(6);
 		buf.writeUint16LE(game_opcode.PLAYER_UPDATE, 0);
@@ -221,11 +226,25 @@ class Game {
 
 	// A player scored
 	score(side) {
+		this.ball.reset();
+		let winner = -1;
+
 		if(side === 'left') {
-			// TODO
+			this.scores[0]++;
+			if(this.scores[0] > 10) winner = 0;
 		}
 		else {
-			// TODO
+			this.scores[1]++;
+			if(this.scores[1] >= 10) winner = 1;
+		}
+
+		if(winner !== -1) {
+			for(let p in this.players) {
+				GameManager.server.send(this.players[p].sk_info, Buffer.from([
+					game_opcode.GAME_UPDATE, 0,
+					winner, 0
+				]));
+			}
 		}
 	}
 }
