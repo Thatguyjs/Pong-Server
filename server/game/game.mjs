@@ -240,12 +240,20 @@ class Game {
 		let winner = -1;
 
 		if(side === 'left') {
-			this.scores[0]++;
-			if(this.scores[0] > 10) winner = 0;
+			this.scores[1]++;
+			if(this.scores[1] > 10) winner = 1;
 		}
 		else {
-			this.scores[1]++;
-			if(this.scores[1] >= 10) winner = 1;
+			this.scores[0]++;
+			if(this.scores[0] >= 10) winner = 0;
+		}
+
+		for(let p in this.players) {
+			GameManager.server.send(this.players[p].sk_info, Buffer.from([
+				game_opcode.SCORE, 0,
+				this.scores[0],
+				this.scores[1]
+			]));
 		}
 
 		if(winner !== -1) {

@@ -289,11 +289,8 @@ class GameSocket {
 		const buf = new ArrayBuffer(6);
 		const view = new DataView(buf);
 
-		// Normalize the Y position between 0 and 100
-		let y = (player.y - player.height * 50) / (window.innerHeight - player.height * 100) * 100;
-
 		view.setUint16(0, GameSocket.opcode.PLAYER_UPDATE, true);
-		view.setFloat32(2, y);
+		view.setFloat32(2, player.y);
 
 		this.#socket.send(buf);
 	}

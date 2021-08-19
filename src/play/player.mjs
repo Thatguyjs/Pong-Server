@@ -29,12 +29,12 @@ class Player {
 	input_keys = {};
 	#keys = { up: false, down: false };
 
-	x = 0;
-	y = 50;
-	vel = { x: 0, y: 0 };
+	x = 0; // % of screen width
+	y = 50; // % of screen height
+	vel = { x: 0, y: 0 }; // % based on screen dimensions
 
 	width = 8; // px
-	height = 1.2; // % of height
+	height = 16; // % of screen height
 
 	constructor(position, input_mode) {
 		if(position < 0 || position > 1) throw new RangeError("Invalid position: " + position);
@@ -65,11 +65,11 @@ class Player {
 
 
 	reset() {
-		if(this.position === Player.LEFT) this.x = 60;
-		else this.x = window.innerWidth - 60;
+		if(this.position === Player.LEFT) this.x = 4;
+		else this.x = 96;
 
 		let interval = setInterval(() => {
-			this.y = lerp(this.y, window.innerHeight / 2, 0.1);
+			this.y = lerp(this.y, 50, 0.1);
 		}, 10);
 
 		setTimeout(clearInterval, 300, interval);
@@ -80,42 +80,42 @@ class Player {
 
 
 	update() {
-		if(this.position === Player.LEFT) this.x = 60;
-		else this.x = window.innerWidth - 60;
+		if(this.position === Player.LEFT) this.x = 4;
+		else this.x = 96;
 
 		let slow = true;
 
 		if(this.#keys.up) {
-			this.vel.y = lerp(this.vel.y, -14, 0.1);
+			this.vel.y = lerp(this.vel.y, -2.2, 0.05);
 			slow = false;
 		}
 		if(this.#keys.down) {
-			this.vel.y = lerp(this.vel.y, 14, 0.1);
+			this.vel.y = lerp(this.vel.y, 2.2, 0.05);
 			slow = false;
 		}
 
-		if(slow) this.vel.y = lerp(this.vel.y, 0, 0.12);
+		if(slow) this.vel.y = lerp(this.vel.y, 0, 0.14);
 
 		this.x += this.vel.x;
 		this.y += this.vel.y;
 
-		if(this.input_mode === Player.NET) {
-			this.y = Net.opponent_pos / 100 * (window.innerHeight - this.height) + this.height / 2;
-		}
+		if(this.input_mode === Player.NET)
+			this.y = Net.opponent_pos;
 
-		this.y = constrain(this.y, this.height / 2, window.innerHeight - this.height / 2);
+		this.y = constrain(this.y, this.height / 2, 100 - this.height / 2);
 
-		if(this.input_mode === Player.LOCAL) {
+		if(this.input_mode === Player.LOCAL)
 			Net.send_update(this);
-		}
 	}
 
 
 	render(ctx) {
-		const height = this.height * 100;
+		const x = this.x / 100 * window.innerWidth;
+		const y = this.y / 100 * window.innerHeight;
+		const height = this.height / 100 * window.innerHeight;
 
 		ctx.fillStyle = '#ffffff';
-		ctx.fillRect(this.x - this.width / 2, this.y - height / 2, this.width, height);
+		ctx.fillRect(x - this.width / 2, y - height / 2, this.width, height);
 	}
 }
 

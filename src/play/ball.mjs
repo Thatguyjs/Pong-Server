@@ -17,7 +17,6 @@ function constrain(val, min, max) {
 class Ball {
 	x = 0;
 	y = 0;
-
 	size = 10;
 
 	constructor() {

@@ -44,6 +44,11 @@ const Net = {
 			this.opponent_pos = position;
 		});
 
+		this.socket.on('score', (left, right) => {
+			this.state.scores[0] = left;
+			this.state.scores[1] = right;
+		});
+
 		this.socket.on('game_update', (state) => {
 			console.log("Game update:", state);
 		});
