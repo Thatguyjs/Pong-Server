@@ -88,8 +88,7 @@ function render() {
 	player_1.render(ctx);
 	player_2.render(ctx);
 
-	if(Net.state.scores[0] === 10) return show_win(0);
-	else if(Net.state.scores[1] === 10) return show_win(1);
+	if(Net.state.won) return show_win(Net.state.winner);
 
 	ball.render(ctx);
 
@@ -106,7 +105,7 @@ bit_font.load().then((font) => {
 
 function show_win(player) {
 	ctx.fillStyle = "#fff";
-	text(`Player ${player + 1} wins!`, width / 2, height / 2, 80);
+	text(`Player ${player} wins!`, width / 2, height / 2, 80);
 
 	ctx.fillStyle = "#555";
 	text("Press [space] to restart", width / 2, height - 40, 32);

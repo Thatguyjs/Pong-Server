@@ -255,7 +255,7 @@ class GameSocket {
 				break;
 
 			case GameSocket.opcode.WIN:
-				this.#emitter.emit('win', view.getUint8(2));
+				this.#emitter.emit('win', stringify(bytes, 2));
 				break;
 
 			default:

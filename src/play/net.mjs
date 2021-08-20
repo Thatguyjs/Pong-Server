@@ -13,7 +13,9 @@ const Net = {
 
 	state: {
 		scores: [0, 0],
-		paused: false
+		paused: false,
+		won: false,
+		winner: ''
 	},
 
 
@@ -49,8 +51,8 @@ const Net = {
 			this.state.scores[1] = right;
 		});
 
-		this.socket.on('game_update', (state) => {
-			console.log("Game update:", state);
+		this.socket.on('win', (name) => {
+			console.log("Game won:", name);
 		});
 	},
 

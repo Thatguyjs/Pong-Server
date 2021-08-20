@@ -46,8 +46,11 @@ class Game {
 	max_players = 2;
 
 	scores = [0, 0];
+	winner = -1;
 
 	ball = new Ball();
+
+	update_interval = null;
 
 
 	constructor(key) {
@@ -211,7 +214,7 @@ class Game {
 			game_opcode.POSITION, 0, 1, 0
 		]));
 
-		setInterval(() => {
+		this.update_interval = setInterval(() => {
 			this.send_update(this.players[keys[0]].sk_info, this.players[keys[1]].pos);
 			this.send_update(this.players[keys[1]].sk_info, this.players[keys[0]].pos);
 
@@ -221,6 +224,11 @@ class Game {
 			GameManager.server.send(this.players[keys[0]].sk_info, this.ball.get_buffer(game_opcode.BALL_UPDATE));
 			GameManager.server.send(this.players[keys[1]].sk_info, this.ball.get_buffer(game_opcode.BALL_UPDATE));
 		}, 0);
+	}
+
+	// Stop sending players updates
+	stop_updates() {
+		if(this.update_interval) clearInterval(this.update_interval);
 	}
 
 
@@ -257,11 +265,14 @@ class Game {
 		}
 
 		if(winner !== -1) {
+			this.winner = winner;
+
 			for(let p in this.players) {
-				GameManager.server.send(this.players[p].sk_info, Buffer.from([
-					game_opcode.WIN, 0,
-					winner, 0
-				]));
+				GameManager.server.send(this.players[p].sk_info, Buffer.from(
+					String.fromCharCode(game_opcode.WIN) +
+					this.players[winner].name,
+					'utf16le'
+				));
 			}
 		}
 	}
