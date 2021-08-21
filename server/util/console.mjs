@@ -89,6 +89,10 @@ const Console = {
 		console.log(apply_style(this.level_style.ERROR, '[error]'), ...args);
 	},
 
+	style: function(style, ...args) {
+		return apply_style(style, args.join(' '));
+	}
+
 };
 
 

@@ -2,6 +2,7 @@
 
 import gen_string from "./string.mjs";
 import { settings } from "../settings.mjs";
+import Console from "./console.mjs";
 
 import EventEmitter from "events";
 const emitter = new EventEmitter();
@@ -39,20 +40,30 @@ const ServerAuth = {
 
 	// Initialize keys & timeouts
 	init: function() {
+		Console.info("Admin keys generated:");
 		for(let i = 0; i < settings.keys.admin.amount; i++) {
-			this.keys[gen_string(settings.keys.admin.length)] = {
+			const key_str = gen_string(settings.keys.admin.length);
+
+			this.keys[key_str] = {
 				type: ServerAuth.ADMIN,
 				timestamp: Date.now(),
 				uses: 0
 			};
+
+			console.log(Console.style(['green'], `  ${key_str}`));
 		}
 
+		Console.info("Guest keys generated:");
 		for(let i = 0; i < settings.keys.guest.amount; i++) {
-			this.keys[gen_string(settings.keys.guest.length)] = {
+			const key_str = gen_string(settings.keys.guest.length);
+
+			this.keys[key_str] = {
 				type: ServerAuth.GUEST,
 				timestamp: Date.now(),
 				uses: 0
 			};
+
+			console.log(Console.style(['green'], `  ${key_str}`));
 		}
 
 		setInterval(() => {
@@ -79,6 +90,8 @@ const ServerAuth = {
 				this.sessions[s].key = new_key;
 			}
 		}
+
+		Console.info(`${old_type === ServerAuth.ADMIN ? "ADMIN" : "GUEST"} key updated: ${Console.style(['green'], new_key)}`);
 	},
 
 
@@ -144,9 +157,6 @@ const ServerAuth = {
 
 	// Check if a request is authorized
 	is_authorized: function(req) {
-		// For development
-		return true;
-
 		const cookie = parse_cookie(req.headers.cookie);
 		if(!('auth' in cookie)) return false;
 
