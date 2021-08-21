@@ -10,9 +10,10 @@ An HTTP / WebSocket server for playing Pong in the browser
 
 # Setup
  1. Make sure Node.js >= 14.0.0 is installed ([download here](https://nodejs.org/en/download/current/))
- 2. Open a terminal window and navigate to `Pong-Server/server`
- 3. Run `node index.mjs`
- 4. Open a browser window and go to the HTTP address printed by the server
+ 2. Download the source code
+ 3. Navigate to `Pong-Server/server` in your terminal / CLI
+ 4. Run `node index.mjs`
+ 5. Open a browser window and go to the HTTP address printed by the server
 
 # Server Settings
 All server settings are stored in [/server/settings.json](/server/settings.json).
