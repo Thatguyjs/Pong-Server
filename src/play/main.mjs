@@ -92,8 +92,6 @@ function render() {
 
 	ball.render(ctx);
 
-	// TODO: Check for score
-
 	window.requestAnimationFrame(render);
 }
 
@@ -104,11 +102,11 @@ bit_font.load().then((font) => {
 
 
 function show_win(player) {
-	ctx.fillStyle = "#fff";
-	text(`Player ${player} wins!`, width / 2, height / 2, 80);
+	ctx.fillStyle = "#eee";
+	text(`${player} won!`, width / 2, height / 2, 70);
 
 	ctx.fillStyle = "#555";
-	text("Press [space] to restart", width / 2, height - 40, 32);
+	text("Press [space] to restart", width / 2, height - 40, 28);
 
 	window.addEventListener('keypress', (evt) => {
 		if(evt.code === "Space") window.location.reload();

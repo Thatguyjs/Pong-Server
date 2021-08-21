@@ -249,7 +249,7 @@ class Game {
 
 		if(side === 'left') {
 			this.scores[1]++;
-			if(this.scores[1] > 10) winner = 1;
+			if(this.scores[1] >= 10) winner = 1;
 		}
 		else {
 			this.scores[0]++;
@@ -264,16 +264,23 @@ class Game {
 			]));
 		}
 
+		// Send the 'win' message to clients, close all connections, and prepare the game for deletion
 		if(winner !== -1) {
 			this.winner = winner;
+			this.stop_updates();
 
 			for(let p in this.players) {
 				GameManager.server.send(this.players[p].sk_info, Buffer.from(
 					String.fromCharCode(game_opcode.WIN) +
-					this.players[winner].name,
+					this.players[Object.keys(this.players)[winner]].name,
 					'utf16le'
 				));
+
+				GameManager.server.disconnect(this.players[p].sk_info);
 			}
+
+			this.state = Game.ENDED;
+			GameManager.remove_game(this.key);
 		}
 	}
 }
@@ -284,7 +291,7 @@ const GameManager = {
 	server: null, // WebSocket server
 
 	max_games: settings['max-games'],
-	available: settings['max-games'],
+	available: settings['max-games'], // Start with all games available
 	games: {},
 
 
@@ -298,6 +305,7 @@ const GameManager = {
 	// Receive a WebSocket message
 	_message: function(frame, sk_info, extra_info) {
 		if(frame.opcode === 1) return; // All data frames should be binary
+		if(!extra_info) return; // Sometimes a frame gets through after a disconnection
 
 		if(!extra_info.authed && frame.data[0] !== lobby_opcode.AUTH) {
 			this.server.disconnect(sk_info);
@@ -388,7 +396,7 @@ const GameManager = {
 					break;
 
 				case game_opcode.PING:
-					// TODO
+					// TODO (maybe)
 					break;
 
 				default:
@@ -401,7 +409,7 @@ const GameManager = {
 
 	// Listen for WebSocket disconnections
 	_disconnect: function(reason, sk_info) {
-
+		// TODO (maybe)
 	},
 
 
@@ -413,6 +421,15 @@ const GameManager = {
 
 		this.available--;
 		return game_key;
+	},
+
+
+	// Only used after a game is finished
+	remove_game: function(game_key) {
+		if(!this.games[game_key]) return null;
+
+		this.available = Math.min(this.available + 1, this.max_games);
+		delete this.games[game_key];
 	},
 
 

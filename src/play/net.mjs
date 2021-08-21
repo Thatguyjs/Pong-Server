@@ -52,13 +52,14 @@ const Net = {
 		});
 
 		this.socket.on('win', (name) => {
-			console.log("Game won:", name);
+			this.state.won = true;
+			this.state.winner = name;
 		});
 	},
 
 
 	send_update: function(player) {
-		if(!this.ready) return false;
+		if(!this.ready || this.state.won) return false;
 
 		this.socket.send_update(player);
 		return true;

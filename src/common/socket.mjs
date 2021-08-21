@@ -225,17 +225,17 @@ class GameSocket {
 
 		const buffer = await evt.data.arrayBuffer();
 		const view = new DataView(buffer);
-		const bytes = new Uint16Array(buffer);
+		const chars = new Uint16Array(buffer);
 
-		switch(bytes[0]) {
+		switch(chars[0]) {
 
 			case GameSocket.opcode.AUTH:
-				this.#emitter.emit('auth', bytes[1], stringify(bytes, 2));
-				if(bytes[1]) this.#init_ping();
+				this.#emitter.emit('auth', chars[1], stringify(chars, 2));
+				if(chars[1]) this.#init_ping();
 				break;
 
 			case GameSocket.opcode.POSITION:
-				this.#emitter.emit('position', bytes[1]);
+				this.#emitter.emit('position', chars[1]);
 				break;
 
 			case GameSocket.opcode.START:
@@ -255,11 +255,11 @@ class GameSocket {
 				break;
 
 			case GameSocket.opcode.WIN:
-				this.#emitter.emit('win', stringify(bytes, 2));
+				this.#emitter.emit('win', stringify(chars, 1));
 				break;
 
 			default:
-				Console.warn("Received unknown frame:", bytes);
+				Console.warn("Received unknown frame:", chars);
 
 		}
 	}
@@ -275,12 +275,12 @@ class GameSocket {
 
 	// Initialize server ping messages
 	#init_ping() {
-		setInterval(() => {
-			this.#socket.send(new Uint8Array([
-				GameSocket.opcode.PING, 0,
-				...array(Date.now().toString())
-			]));
-		}, 3000);
+		// setInterval(() => {
+		// 	this.#socket.send(new Uint8Array([
+		// 		GameSocket.opcode.PING, 0,
+		// 		...array(Date.now().toString())
+		// 	]));
+		// }, 3000);
 	}
 
 

@@ -26,7 +26,7 @@ class Ball {
 		this.vel.x = random(0.05, 0.08);
 		if(Math.random() > 0.5) this.vel.x = -this.vel.x;
 
-		this.vel.y = random(-0.01, 0.01);
+		this.vel.y = random(-0.03, 0.03);
 	}
 
 
