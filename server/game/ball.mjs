@@ -60,7 +60,7 @@ class Ball {
 			this.x = 4.54;
 			this.vel.x *= -1.05;
 		}
-		else if(this.x > 95.46 this.x < 96.46 && this.y > p2 - 8 && this.y < p2 + 8) {
+		else if(this.x > 95.46 && this.x < 96.46 && this.y > p2 - 8 && this.y < p2 + 8) {
 			this.x = 95.46;
 			this.vel.x *= -1.05;
 		}
