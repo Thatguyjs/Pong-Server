@@ -4,6 +4,7 @@
 import Ball from "./ball.mjs";
 
 import gen_string from "../util/string.mjs";
+import Console from "../util/console.mjs";
 import { settings } from "../settings.mjs";
 
 
@@ -419,6 +420,8 @@ const GameManager = {
 		const game_key = gen_string(16, true);
 		this.games[game_key] = new Game(game_key);
 
+		Console.info("Game created:", Console.style(['green'], game_key));
+
 		this.available--;
 		return game_key;
 	},
@@ -430,6 +433,8 @@ const GameManager = {
 
 		this.available = Math.min(this.available + 1, this.max_games);
 		delete this.games[game_key];
+
+		Console.info("Game removed: ", Console.style(['green'], game_key));
 	},
 
 

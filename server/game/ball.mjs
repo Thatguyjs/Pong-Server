@@ -56,11 +56,11 @@ class Ball {
 
 	// Check for collisions with players
 	collide(p1, p2) {
-		if(this.x < 4.54 && this.y > p1 - 8 && this.y < p1 + 8) {
+		if(this.x > 3.54 && this.x < 4.54 && this.y > p1 - 8 && this.y < p1 + 8) {
 			this.x = 4.54;
 			this.vel.x *= -1.05;
 		}
-		else if(this.x > 95.46 && this.y > p2 - 8 && this.y < p2 + 8) {
+		else if(this.x > 95.46 this.x < 96.46 && this.y > p2 - 8 && this.y < p2 + 8) {
 			this.x = 95.46;
 			this.vel.x *= -1.05;
 		}

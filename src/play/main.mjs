@@ -106,9 +106,9 @@ function show_win(player) {
 	text(`${player} won!`, width / 2, height / 2, 70);
 
 	ctx.fillStyle = "#555";
-	text("Press [space] to restart", width / 2, height - 40, 28);
+	text("Press [space] to leave", width / 2, height - 40, 28);
 
 	window.addEventListener('keypress', (evt) => {
-		if(evt.code === "Space") window.location.reload();
+		if(evt.code === "Space") window.location.assign('/menu');
 	});
 }

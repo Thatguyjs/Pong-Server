@@ -95,7 +95,7 @@ const ServerAuth = {
 	},
 
 
-	// Update keys if they've expired (expiration time in settings.json)
+	// Update keys if they've expired (expiration times are in settings.json)
 	update_keys: function(type) {
 		const now = Date.now();
 
@@ -125,6 +125,13 @@ const ServerAuth = {
 	add_session: function(request, key) {
 		if(this.keys[key].type === ServerAuth.GUEST && this.sessions.length >= settings['max-sessions']) {
 			return '';
+		}
+
+		{
+			const key_type = this.keys[key].type === ServerAuth.ADMIN ? "ADMIN" : "GUEST";
+			const styled_ip = Console.style(['magenta'], request.connection.remoteAddress.toString());
+
+			Console.info(`${key_type} joined from ${styled_ip}`);
 		}
 
 		const cookie = gen_string(32);
