@@ -434,7 +434,7 @@ const GameManager = {
 		this.available = Math.min(this.available + 1, this.max_games);
 		delete this.games[game_key];
 
-		Console.info("Game removed: ", Console.style(['green'], game_key));
+		Console.info("Game removed:", Console.style(['green'], game_key));
 	},
 
 
